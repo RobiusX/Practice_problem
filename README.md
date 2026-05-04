@@ -1,7 +1,2 @@
 
-Practice_problem
-   ├── Beecrowd
-   │     ├── problem1.cpp
-   │     ├── problem2.cpp
-   ├── Codeforces
-   │     ├── problemA.cpp
+Practice_makes_man_perfect
