@@ -1,47 +1,46 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int coin[] = {1, 2, 3};
-int n = 3;
+vector<int> price;
+int n;
+int dp[500][500];   // dp[i][len]
 
-int dp[100][100];
-
-// Memoization function
-int coinChange(int i, int target){
-
+// Memoized function
+int RC(int i, int len){
     // Base case
-    if(target == 0)
-        return 1;
-
-    if(i >= n || target < 0)
+    if(i > n || len == 0)
         return 0;
 
     // Check dp
-    if(dp[i][target] != -1)
-        return dp[i][target];
+    if(dp[i][len] != -1)
+        return dp[i][len];
 
-    // Skip current coin
-    int skip = coinChange(i + 1, target);
+    // Skip case
+    int skip = RC(i + 1, len);
 
-    // Take current coin
+    // Take case (unbounded)
     int take = 0;
-
-    if(target >= coin[i]){
-        take = coinChange(i, target - coin[i]);
+    if(i <= len){
+        take = price[i] + RC(i, len - i);
     }
 
     // Store and return
-    return dp[i][target] = take + skip;
+    return dp[i][len] = max(take, skip);
 }
 
 int main(){
+    int len;
+    cin >> n >> len;
 
-    int target;
-    cin >> target;
+    price.resize(n+1);
+
+    for(int i = 0; i <= n; i++){
+        cin >> price[i];
+    }
 
     memset(dp, -1, sizeof(dp));
 
-    cout << coinChange(0, target) << endl;
+    cout << RC(1, len) << endl;
 
     return 0;
 }
